@@ -45,7 +45,6 @@ pub use geometry::{Affine, Point, Rect, Size, Vec2};
 /// of [`Role::Unknown`]). This is more efficient in serialization formats
 /// where integers use a variable-length encoding.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -272,7 +271,6 @@ pub enum Role {
 
 /// An action to be taken on an accessibility node.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -354,11 +352,9 @@ impl Action {
         1 << (self as u8)
     }
 
-    #[cfg(not(feature = "enumn"))]
     fn n(value: u8) -> Option<Self> {
-        // Manually implement something similar to the enumn crate. We don't
-        // want to bring this crate by default though and we can't use a
-        // macro as it would break C bindings header file generation.
+        // We can't use a macro as it would break C bindings header file
+        // generation.
         match value {
             0 => Some(Action::Click),
             1 => Some(Action::Focus),
@@ -400,7 +396,6 @@ fn action_mask_to_action_vec(mask: u32) -> Vec<Action> {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -422,7 +417,6 @@ pub enum Orientation {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -448,7 +442,6 @@ pub enum TextDirection {
 ///
 /// [`aria-invalid`]: https://www.w3.org/TR/wai-aria-1.1/#aria-invalid
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -469,7 +462,6 @@ pub enum Invalid {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -500,7 +492,6 @@ impl From<bool> for Toggled {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -521,7 +512,6 @@ pub enum SortDirection {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -546,7 +536,6 @@ pub enum AriaCurrent {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -567,7 +556,6 @@ pub enum AutoComplete {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -588,7 +576,6 @@ pub enum Live {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -611,7 +598,6 @@ pub enum HasPopup {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -636,7 +622,6 @@ pub enum ListStyle {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -658,7 +643,6 @@ pub enum TextAlign {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -678,7 +662,6 @@ pub enum VerticalOffset {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "enumn", derive(enumn::N))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
@@ -794,7 +777,7 @@ pub struct TextSelection {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize, enumn::N))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 #[repr(u8)]
@@ -885,12 +868,32 @@ enum PropertyValue {
     TreeId(TreeId),
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize, enumn::N))]
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
-#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
-#[repr(u8)]
-enum PropertyId {
+macro_rules! property_ids {
+    ($($id:ident),+ $(,)?) => {
+        #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+        #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+        #[cfg_attr(feature = "schemars", derive(JsonSchema))]
+        #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+        #[repr(u8)]
+        enum PropertyId {
+            $($id,)+
+            // This MUST be last.
+            Unset,
+        }
+
+        #[cfg(feature = "serde")]
+        impl PropertyId {
+            fn n(value: u8) -> Option<Self> {
+                const VARIANTS: [PropertyId; PropertyId::Unset as usize] = [
+                    $(PropertyId::$id,)+
+                ];
+                VARIANTS.get(value as usize).copied()
+            }
+        }
+    };
+}
+
+property_ids! {
     // NodeIdVec
     Children,
     Controls,
@@ -1003,9 +1006,6 @@ enum PropertyId {
     TextSelection,
     CustomActions,
     TreeId,
-
-    // This MUST be last.
-    Unset,
 }
 
 impl Clone for PropertyValue {
